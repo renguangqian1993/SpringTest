@@ -14,19 +14,21 @@
     <url>https://github.com/renguangqian1993/SpringTest</url>
 
     <properties>
-        <java_source_version>1.8</java_source_version>
-        <java_target_version>1.8</java_target_version>
+        <jdk_version>1.8</jdk_version>
         <spring_version>5.2.9.RELEASE</spring_version>
+        <db_connector_mysql_version>8.0.21</db_connector_mysql_version>
+        <db_pool_dbcp2_version>2.8.0</db_pool_dbcp2_version>
+        <db_pool_druid_version>1.2.1</db_pool_druid_version>
+        <db_pool_HikariCP_version>3.4.5</db_pool_HikariCP_version>
+        <junit_version>4.13</junit_version>
         <mvn_compiler_plugin_version>3.8.1</mvn_compiler_plugin_version>
         <mvn_jar_plugin_version>3.2.0</mvn_jar_plugin_version>
-        <mysql_connector_java_version>8.0.21</mysql_connector_java_version>
     </properties>
 
     <!-- 继承自该项目的所有子项目的默认依赖信息。这部分的依赖信息不会被立即解析,而是当子项目声明一个依赖（必须描述group ID和 artifact
     ID信息），如果group ID和artifact ID以外的一些信息没有描述，则通过group ID和artifact ID 匹配到这里的依赖，并使用这里的依赖信息。 -->
     <dependencyManagement>
         <dependencies>
-            <!--参见dependencies/dependency元素 -->
         </dependencies>
     </dependencyManagement>
 
@@ -65,9 +67,49 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql_connector_java_version}</version>
+            <version>${db_connector_mysql_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>${db_pool_dbcp2_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${db_pool_druid_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${db_pool_HikariCP_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit_version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -112,8 +154,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java_source_version}</source>
-                    <target>${java_target_version}</target>
+                    <source>${jdk_version}</source>
+                    <target>${jdk_version}</target>
                     <verbose>true</verbose>
                     <encoding>UTF-8</encoding>
                     <compilerArguments>
