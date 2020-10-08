@@ -2,11 +2,155 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>renguangqian</groupId>
     <artifactId>SpringTest</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>SpringTest</name>
+    <description>A maven project to study Spring.</description>
+    <url>https://github.com/renguangqian1993/SpringTest</url>
+
+    <properties>
+        <java_source_version>1.8</java_source_version>
+        <java_target_version>1.8</java_target_version>
+        <spring_version>5.2.9.RELEASE</spring_version>
+        <mvn_compiler_plugin_version>3.8.1</mvn_compiler_plugin_version>
+        <mvn_jar_plugin_version>3.2.0</mvn_jar_plugin_version>
+        <mysql_connector_java_version>8.0.21</mysql_connector_java_version>
+    </properties>
+
+    <!-- 继承自该项目的所有子项目的默认依赖信息。这部分的依赖信息不会被立即解析,而是当子项目声明一个依赖（必须描述group ID和 artifact
+    ID信息），如果group ID和artifact ID以外的一些信息没有描述，则通过group ID和artifact ID 匹配到这里的依赖，并使用这里的依赖信息。 -->
+    <dependencyManagement>
+        <dependencies>
+            <!--参见dependencies/dependency元素 -->
+        </dependencies>
+    </dependencyManagement>
+
+    <!--该元素描述了项目相关的所有依赖。 这些依赖组成了项目构建过程中的一个个环节。它们自动从项目定义的仓库中下载。要获取更多信息，请看项目依赖机制。 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql_connector_java_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${mvn_compiler_plugin_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>${mvn_jar_plugin_version}</version>
+        </dependency>
+    </dependencies>
+
+    <!--构建项目需要的信息 -->
+    <build>
+        <!--产生的构件的文件名，默认值是${artifactId}-${version}。 -->
+        <finalName>${project.artifactId}</finalName>
+        <!--该元素设置了项目源码目录，当构建项目的时候，构建系统会编译目录里的源码。该路径是相对于pom.xml的相对路径。 -->
+        <sourceDirectory>./src/main</sourceDirectory>
+        <!--该元素设置了项目脚本源码目录，该目录和源码目录不同：绝大多数情况下，该目录下的内容 会被拷贝到输出目录(因为脚本是被解释的，而不是被编译的)。 -->
+<!--        <scriptSourceDirectory />-->
+        <!--该元素设置了项目单元测试使用的源码目录，当测试项目的时候，构建系统会编译目录里的源码。该路径是相对于pom.xml的相对路径。 -->
+        <testSourceDirectory>./src/test</testSourceDirectory>
+        <!--被编译过的应用程序class文件存放的目录。 -->
+        <outputDirectory>./target/classes/main</outputDirectory>
+        <!--被编译过的测试class文件存放的目录。 -->
+        <testOutputDirectory>./target/classes/test</testOutputDirectory>
+
+        <!--当filtering开关打开时，使用到的过滤器属性文件列表 -->
+        <filters />
+        <!--子项目可以引用的默认插件信息。该插件配置项直到被引用时才会被解析或绑定到生命周期。给定插件的任何本地配置都会覆盖这里的配置 -->
+        <pluginManagement>
+            <!--使用的插件列表 。 -->
+            <plugins>
+                <!--plugin元素包含描述插件所需要的信息。 -->
+            </plugins>
+        </pluginManagement>
+        <!--使用的插件列表 -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java_source_version}</source>
+                    <target>${java_target_version}</target>
+                    <verbose>true</verbose>
+                    <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <sourcepath>src/main/java</sourcepath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <!-- 添加maven 描述 -->
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifest>
+                            <!-- 添加到classpath 开关 -->
+                            <addClasspath>true</addClasspath>
+                            <!-- classpath 前缀 -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!-- 程序主函数入口 todo-->
+                            <mainClass></mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>./</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <!-- 过滤掉不希望包含在jar中的文件  -->
+                    <excludes>
+                        <exclude>*.xml</exclude>
+                    </excludes>
+                    <includes>
+                        <include></include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>
